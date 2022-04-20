@@ -2,5 +2,5 @@
 
 This repositories will contain various regression analysis projects.
 
-## Multiple Linear Regression 
+### Multiple Linear Regression 
 - Diamond Price Prediction 
