@@ -19,10 +19,10 @@ knitr::opts_chunk$set(echo = TRUE)
 library("tidyverse")
 # library(plyr)
 library(dplyr)
-library(faraway) 
+library(faraway) # for VIF
 library(multcomp)
-library(lawstat)
-library(MASS)
+library(lawstat) # for levene's test
+library(MASS) # qq plot
 ```
 
  - Set the directory to where the files are.
@@ -97,19 +97,22 @@ range(data$price)
 ```
 3. Preliminary analysis
 
- - Perform levene's test and plot boxplots.
+ - Plot boxplots and perform levene's test.
 
-```{r}
-
-levene.test(price,color)
-
-```
 
 ```{r}
 
 boxplot(price~color,data=data, main="Price vs Color", xlab="Color", ylab="Price")
 
 ```
+
+```{r}
+# is variance of the response same for every categories?
+# null is that variance is same 
+levene.test(price,color)
+
+```
+
  * Ascending order of the colors : "J","I","H","G","F","E","D"
  * Every color class has lots of outliers for high prices - the better the color, the more spread in the outliers.
 
@@ -278,15 +281,17 @@ abline(h=0,col="red")
 
 ```{r}
 
-##acf plot of residuals
+##acf plot of residuals to check the independence of the error terms, making sure there is no correlation between the error terms.
+## Blue lines represent the significant correlation threshold.
 acf(lmodel$residuals, main="Autocorrelation Plot")
 
 ```
 
 ```{r}
 
-##QQ plot of residuals
+## Normal probability or QQ plot of residuals
 qqnorm(lmodel$residuals, main="Normal Probability Plot")
+# add expected line based on the normality assumtion.
 qqline(lmodel$residuals, col="red")
 
 ```
@@ -356,7 +361,9 @@ vif(lmodel_fixed)
 ```
 
 ```{r}
-
+# VIF for multicollinearity. 
+# by what factor the variance is multiplied by for what we have vs perfectly uncorrelated situation.
+# VIF > 10 usually means multicolinearlity.
 ```
 
 ```{r}
