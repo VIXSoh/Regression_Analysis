@@ -116,11 +116,6 @@ levene.test(price,color)
  * Ascending order of the colors : "J","I","H","G","F","E","D"
  * Every color class has lots of outliers for high prices - the better the color, the more spread in the outliers.
 
-```{r}
-
-levene.test(price,clarity)
-
-```
 
 ```{r}
 
@@ -128,9 +123,23 @@ boxplot(price~clarity,data=data, main="Price vs Clarity", xlab="Clarity", ylab="
 
 ``` 
 
+```{r}
+
+levene.test(price,clarity)
+
+```
+
+
+
  * Ascending order of the clarity : "SI2","SI1","VS2","VS1","VVS2","VVS1","IF", "FL"
  * Every clarity class has lots of outliers for high prices.
  
+```{r}
+
+boxplot(price~cut,data=data, main="Price vs Cut", xlab="Cut", ylab="Price")
+
+```
+
 ```{r}
 
 levene.test(price,cut)
@@ -138,14 +147,15 @@ levene.test(price,cut)
 ```
 
  
-```{r}
 
-boxplot(price~cut,data=data, main="Price vs Cut", xlab="Cut", ylab="Price")
-
-```
  * Ascending order of the cuts : "Good","Very Good","Ideal","Astor Ideal"
  * Every cut class has lots of outliers for high prices - the better the cut, the more spread in the outliers.
  
+ 
+ + The variances of the response for each categories are not same for different categories.
+ + The ratio of the sizes of the largest and smallest categories are bigger than 1.5
+ + Need to watch out for overestimating and underestimating of p-values.
+ + Could consider using Welch Test instead.
  
  - Now, let's look a scatter plots of the data.
  
@@ -265,7 +275,7 @@ legend("topright", c("Good","Very Good","Ideal","Astor Ideal"), lty=c(1,2,3,4), 
 
 ```{r}
 
-# perform the linear regression to our newly formatted dataset 
+# perform the linear regression.
 lmodel <- lm(price~.,data)
 summary(lmodel)
 
