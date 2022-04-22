@@ -204,10 +204,10 @@ abline(reg5, lty=5, col='pink')
 abline(reg6, lty=6, col='purple')
 abline(reg7, lty=7, col='orange')
 legend("topright", c("J","I","H","G","F","E","D"), lty=c(1,2,3,4,5,6,7), col=c('black','red','blue','green','pink','purple','orange'))
-#the slopes for all of the lines are similar, but there still may be interaction
+
 
 ```
-
+The slopes are not same for each categories. There still may be interaction.
  
 ```{r}
 
@@ -245,9 +245,11 @@ abline(reg6, lty=6, col='purple')
 abline(reg7, lty=7, col='orange')
 abline(reg8, lty=8, col='brown')
 legend("topright", c("SI2","SI1","VS2","VS1","VVS2","VVS1","IF", "FL"), lty=c(1,2,3,4,5,6,7,8), col=c('black','red','blue','green','pink','purple','orange','brown'))
-#the slopes for all of the lines are similar, but there still may be interaction
+
 
 ```
+
+The slopes are not same for each categories. There still may be interaction.
 
 ```{r}
 
@@ -269,13 +271,15 @@ abline(reg2, lty=2, col='red')
 abline(reg3, lty=3, col='blue')
 abline(reg4, lty=4, col='green')
 legend("topright", c("Good","Very Good","Ideal","Astor Ideal"), lty=c(1,2,3,4), col=c('black','red','blue','green'))
-#the slopes for all of the lines are similar, but there still may be interaction
+
 
 ```
+The slopes are not same for each categories. There still may be interaction.
+
+Now, Let's look at basic linear regression results. 
 
 ```{r}
 
-# perform the linear regression.
 lmodel <- lm(price~.,data)
 summary(lmodel)
 
@@ -288,14 +292,18 @@ plot(lmodel$fitted.values,lmodel$residuals,main="Residual Plot",xlab="Fitted Val
 abline(h=0,col="red")
 
 ```
+The errors don't seem to have mean of 0 or equal variance. 
+
+Let's look at ACF plot of residuals to check the independence of the error terms and check if there is correlation between the error terms.
 
 ```{r}
 
-##acf plot of residuals to check the independence of the error terms, making sure there is no correlation between the error terms.
-## Blue lines represent the significant correlation threshold.
 acf(lmodel$residuals, main="Autocorrelation Plot")
 
 ```
+Blue lines represent the significant correlation threshold. It seems to have autocorrelation. 
+
+Now let's check if ther normality assumtion is met through QQ plot. 
 
 ```{r}
 
@@ -330,20 +338,6 @@ summary(lmodel_fixed)
 
 ```
 
-```{r}
-
-title = "Price vs. Carat"
-xlab = "Carat"
-ylab ="Price"
-x = carat
-y = price
-
-# Produce a plot. 
-plot(x, y, main=title, xlab=xlab, ylab=ylab)
-
-abline(lmodel_fixed, col="red")
-
-```
 
 ```{r}
 
