@@ -356,6 +356,70 @@ acf(lmodel_fixed$residuals, main="Autocorrelation Plot")
 qqnorm(lmodel_fixed$residuals, main="Normal Probability Plot")
 qqline(lmodel_fixed$residuals, col="red")
 ```
+
+Now that we transformed the response variable, we can transform the predictor variables. 
+
+Let's look at the Carat variable. 
+
+```{r}
+title = "Price vs. Carat"
+xlab = "Carat"
+ylab ="Price"
+x = carat
+y = price
+
+# Produce a plot. 
+plot(x, y, main=title, xlab=xlab, ylab=ylab)
+
+abline(lmodel_fixed, col="red")
+
+plot(lmodel_fixed$fitted.values,lmodel_fixed$residuals,main="Residual Plot",xlab="Fitted Values",ylab="Residual Values")
+abline(h=0,col="red")
+```
+
+
+```{r}
+############ x ^ 1/2 section
+lamb2 <- 1/2
+
+newCaratSqrt <- carat^lamb2
+
+datFormatted_fixed_sqrt <- data_fixed
+datFormatted_fixed_sqrt$carat <- newCaratSqrt
+
+lmodel_fixed_sqrt <- lm(price~.,datFormatted_fixed_sqrt)
+summary(lmodel_fixed_sqrt)
+
+title = "Price VS. Carat"
+xlab = "Carat"
+ylab ="Price"
+x = datFormatted_fixed_sqrt$carat
+y = datFormatted_fixed_sqrt$price
+
+# Produce a plot. 
+plot(x, y, main=title, xlab=xlab, ylab=ylab)
+
+abline(lmodel_fixed_sqrt, col="red")
+```
+
+```{r}
+lamb2 <- .69
+##acf plot of residuals
+acf(lmodel_fixed$residuals, main="Autocorrelation Plot")
+
+##QQ plot of residuals
+qqnorm(lmodel_fixed$residuals, main="Normal Probability Plot")
+qqline(lmodel_fixed$residuals, col="red")
+
+lamb2 <- 0.69
+
+newCarat <- carat^lamb2
+
+datFormatted_fixed2 <- data_fixed
+datFormatted_fixed2$carat <- newCarat
+attach(datFormatted_fixed2)
+```
+
 ### we have transformed both the response and numerical predictor and the model is more compliant with the linear model assumtions
 ### we will now see if there are multicollinearity 
 ```{r}
