@@ -570,32 +570,173 @@ qqline(lmodel_fixed2$residuals, col="red")
 
 ```
 
-### we have transformed both the response and numerical predictor and the model is more compliant with the linear model assumtions
-### we will now see if there are multicollinearity 
+Both the response and numerical predictor are transformed now and the model is more compliant with the linear model assumptions.
+
+Next, check for multicollinearity with VIF analysis. It will show by what factor the variance is multiplied by for this situation compared to a perfectly uncorrelated situation. 
+
+VIF > 10 is commonly used to check for multicolinearity. 
+
 ```{r}
 # perform vif analysis 
 vif(lmodel_fixed2)
 # none of the scores are over 10 ( all of them are actually less than 4)
 ```
 
+None of the scores are over 10. 
+
+Let's perform ANOVA test. 
+
 ```{r}
-# VIF for multicollinearity. 
-# by what factor the variance is multiplied by for what we have vs perfectly uncorrelated situation.
-# VIF > 10 usually means multicolinearlity.
+
+# perform anova test 
+anova(lmodel_fixed2)
+
+```
+
+All of the predictors are considered significant.
+
+Perform pairwise test to see if all categorical variables are significantly different in their means for price for each value.
+
+```{r}
+pairwise_clarity<-glht(lmodel_fixed2, linfct = mcp(clarity= "Tukey"))
+summary(pairwise_clarity)
+```
+
+```{r}
+pairwise_color<-glht(lmodel_fixed2, linfct = mcp(color= "Tukey"))
+summary(pairwise_color)
+```
+
+```{r}
+pairwise_cut<-glht(lmodel_fixed2, linfct = mcp(cut= "Tukey"))
+summary(pairwise_cut)
+```
+
+They are all significantly different for all pairs.
+
+Let's do partial F test for each categorical variable.
+
+First, make the reduced linear regression model
+
+```{r}
+lmodel_noClarity <- lm(price~carat+color+cut)
+lmodel_noColor <- lm(price~carat+clarity+cut)
+lmodel_noCut <- lm(price~carat+clarity+color)
+```
+
+Perform the partial F test.
+
+For clarity :
+
+```{r}
+anova(lmodel_noClarity, lmodel_fixed2)
+```
+
+For color :
+
+```{r}
+anova(lmodel_noColor, lmodel_fixed2)
+```
+
+For cut :
+
+```{r}
+anova(lmodel_noCut, lmodel_fixed2)
+```
+
+Partial F tests were significant for all of the categorical variables.
+
+We can not drop any of the categorical variables.
+
+Partial F tests on one interaction :
+
+```{r}
+lmodel_interactioncocl <- lm(price~carat+cut+clarity*color)
+anova(lmodel_fixed2, lmodel_interactioncocl)
+summary(lmodel_interactioncocl)
+```
+
+
+```{r}
+lmodel_interactioncocu <- lm(price~carat+clarity+cut*color)
+anova(lmodel_fixed2, lmodel_interactioncocu)
+summary(lmodel_interactioncocu)
+```
+
+
+```{r}
+lmodel_interactioncaco <- lm(price~clarity+cut+carat*color)
+anova(lmodel_fixed2, lmodel_interactioncaco)
+summary(lmodel_interactioncaco)
+```
+
+
+```{r}
+lmodel_interactionclcu <- lm(price~carat+color+clarity*cut)
+anova(lmodel_fixed2, lmodel_interactionclcu)
+summary(lmodel_interactionclcu)
+```
+
+
+```{r}
+lmodel_interactionclca <- lm(price~cut+color+clarity*carat)
+anova(lmodel_fixed2, lmodel_interactionclca)
+summary(lmodel_interactionclca)
+```
+
+
+
+```{r}
+lmodel_interactioncacu <- lm(price~clarity+color+carat*cut)
+anova(lmodel_fixed2, lmodel_interactioncacu)
+summary(lmodel_interactioncacu)
+```
+
+All significant?
+
+
+Partial f test on all interactions then between all and one.
+
+```{r}
+lmodel_fullInteraction <- lm(price~carat*clarity*cut*color)
+summary(lmodel_fullInteraction)
+```
+
+```{r}
+anova(lmodel_fixed2, lmodel_fullInteraction)
+```
+
+```{r}
+anova(lmodel_fixed2, lmodel_interactioncaco)
+```
+
+```{r}
+anova(lmodel_fixed2, lmodel_interactioncacu)
+```
+
+```{r}
+anova(lmodel_fixed2, lmodel_interactionclca)
+```
+
+```{r}
+anova(lmodel_fixed2, lmodel_interactionclcu)
+```
+
+```{r}
+anova(lmodel_fixed2, lmodel_interactioncocl)
+```
+
+```{r}
+anova(lmodel_fixed2, lmodel_interactioncocu)
+```
+
+All significant?
+
+```{r}
+
 ```
 
 ```{r}
 
 ```
 
-```{r}
-
-```
-
-```{r}
-
-```
-
-```{r}
-
-```
