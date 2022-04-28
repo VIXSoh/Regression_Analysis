@@ -653,6 +653,9 @@ Partial F tests on one interaction :
 ```{r}
 lmodel_interactioncocl <- lm(price~carat+cut+clarity*color)
 anova(lmodel_fixed2, lmodel_interactioncocl)
+```
+
+```{r}
 summary(lmodel_interactioncocl)
 ```
 
@@ -660,6 +663,9 @@ summary(lmodel_interactioncocl)
 ```{r}
 lmodel_interactioncocu <- lm(price~carat+clarity+cut*color)
 anova(lmodel_fixed2, lmodel_interactioncocu)
+```
+
+```{r}
 summary(lmodel_interactioncocu)
 ```
 
@@ -667,6 +673,9 @@ summary(lmodel_interactioncocu)
 ```{r}
 lmodel_interactioncaco <- lm(price~clarity+cut+carat*color)
 anova(lmodel_fixed2, lmodel_interactioncaco)
+```
+
+```{r}
 summary(lmodel_interactioncaco)
 ```
 
@@ -674,6 +683,9 @@ summary(lmodel_interactioncaco)
 ```{r}
 lmodel_interactionclcu <- lm(price~carat+color+clarity*cut)
 anova(lmodel_fixed2, lmodel_interactionclcu)
+```
+
+```{r}
 summary(lmodel_interactionclcu)
 ```
 
@@ -681,6 +693,9 @@ summary(lmodel_interactionclcu)
 ```{r}
 lmodel_interactionclca <- lm(price~cut+color+clarity*carat)
 anova(lmodel_fixed2, lmodel_interactionclca)
+```
+
+```{r}
 summary(lmodel_interactionclca)
 ```
 
@@ -689,10 +704,13 @@ summary(lmodel_interactionclca)
 ```{r}
 lmodel_interactioncacu <- lm(price~clarity+color+carat*cut)
 anova(lmodel_fixed2, lmodel_interactioncacu)
+```
+
+```{r}
 summary(lmodel_interactioncacu)
 ```
 
-All significant?
+All of the test results were significant. 
 
 
 Partial f test on all interactions then between all and one.
@@ -730,13 +748,6 @@ anova(lmodel_fixed2, lmodel_interactioncocl)
 anova(lmodel_fixed2, lmodel_interactioncocu)
 ```
 
-All significant?
+All of the test results were significant. 
 
-```{r}
-
-```
-
-```{r}
-
-```
-
+For easier interpretation, the model without interaction would work, but interaction terms would aid the prediction significantly.  
