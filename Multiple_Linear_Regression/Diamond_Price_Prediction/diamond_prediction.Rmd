@@ -1,8 +1,10 @@
 ---
-title: "diamond_prediction"
+title: "Diamond Price Prediction using Multiple Linear Regression"
 author: "Joon Soh"
 date: "3/11/2022"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -289,6 +291,8 @@ legend("topright", c("Good","Very Good","Ideal","Astor Ideal"), lty=c(1,2,3,4), 
 
 ```
 The slopes are not same for each categories. There still may be interaction.
+
+ 4. Linear Regression Analysis
 
 Now, Let's look at basic linear regression results. 
 
