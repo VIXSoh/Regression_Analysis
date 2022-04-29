@@ -332,6 +332,8 @@ qqline(lmodel$residuals, col="red")
 
 ```
 
+5. Transformations
+
 ```{r}
 # boxcox plotting and transformation
 boxcox(lmodel, lambda=seq(.37,0.375,by=0.001), main ="Box-cox plot")
@@ -587,6 +589,8 @@ vif(lmodel_fixed2)
 ```
 
 None of the scores are over 10. 
+
+6. Test statistics
 
 Let's perform ANOVA test. 
 
